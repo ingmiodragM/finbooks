@@ -187,10 +187,12 @@
 		<band height="50" splitType="Stretch">
 			<textField>
 				<reportElement x="430" y="0" width="60" height="30" uuid="bd1a6203-8ed9-4588-9e53-b4cce223203f"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$V{duguje1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="490" y="0" width="60" height="30" uuid="301d4d39-c20e-4d98-8bcb-65d2d287410f"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$V{potrazuje1}]]></textFieldExpression>
 			</textField>
 		</band>

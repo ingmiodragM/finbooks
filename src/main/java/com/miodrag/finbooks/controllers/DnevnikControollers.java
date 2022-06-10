@@ -74,28 +74,12 @@ public class DnevnikControollers {
 	@RequestMapping("/saveNalog")
 	public	 String saveNalog(@ModelAttribute("Dnevnik") Dnevnik dnevnik, ModelMap modelMap) throws JRException /*String saveNalog(@ModelAttribute("ListaNaloga") ListaNaloga listaNaloga, ModelMap modelMap) */, IOException
 	
-	
 	{
 		 
-		//ListaNaloga listaNalogaSaved = servicel.saveListaNaloga(listaNaloga);
-		// String msg = "Nalog saved with id: " + listaNalogaSaved.getBr_naloga();
-		
-		
 		 Dnevnik dnevnikSaved = service.saveDnevnik(dnevnik);
 		 
 		 List<Object> data = new ArrayList<Object>();
 		 data.add(dnevnik);
-	 
-		 
-	//	 reputil.generateReportN("src/main/resources/reports/t2.jrxml", data);     
-	//	 reputil.downloadInvoice("src/main/resources/reports/t2.jrxml", data);
-		 
-		 
-		//String msg2 = "Parametar id: " + dnevnik.getBr_naloga();
-		// String msg = "Nalog saved with id: " + listaNalogaSaved.getBr_naloga();
-		// modelMap.addAttribute("msg", msg);
-		// emailUtil.sendEmail("springxyzabc@gmail.com", "Location Saved",
-		// "Location Saved Successfully and about to return a response");
 		return "createNalog";
 	}
 
@@ -135,8 +119,6 @@ public class DnevnikControollers {
 		return "displayDnevniks";	
 	}
 	
-	
-	
 	@RequestMapping("/displayDnevniksforPrint")
 	public String displayDnevniksforPrint(ModelMap modelMap) {
 		List<Dnevnik> dnevniks = service.findDnevniksbyBrNaloga(15);
@@ -146,12 +128,10 @@ public class DnevnikControollers {
 	
 	
 	@RequestMapping(value="/print", produces = MediaType.APPLICATION_PDF_VALUE)
-	public	 ResponseEntity<byte[]> saveNalog2(@RequestParam("br_naloga") int brn, ModelMap modelMap) throws JRException , IOException
+	public	 ResponseEntity<byte[]> printNalog(@RequestParam("br_naloga") int brn, ModelMap modelMap) throws JRException , IOException
 	
 	
 	{
-	//	List<Dnevnik> dnevniks = service.findDnevniksbyBrNaloga(15);
-	//	System.out.println(brn);
 		List<Dnevnik> dnevniks = service.findDnevniksbyBrNaloga(brn);
 		 List<Object> data = new ArrayList<Object>();
 		 for (final Dnevnik dnevnik: dnevniks) {
@@ -165,19 +145,18 @@ public class DnevnikControollers {
 				JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport, parameters, beanCollectionDataSource);
 
 				byte data1[] = JasperExportManager.exportReportToPdf(jasperPrint);
-				System.err.println(data1);
+			//	System.err.println(data1);
 
 				HttpHeaders headers = new HttpHeaders();
 				headers.add("Content-Disposition", "inline; nalogreport.pdf");
 				
 				return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(data1);		 
-	//			return  "createNalog";
+
 		 }
 	
-	@RequestMapping("/formaprint")
+	@RequestMapping("/formaprint")    //za testiranje
 	public String show()
 	{
-
 
 		return "createNalogforprint";
 	}
@@ -187,10 +166,5 @@ public class DnevnikControollers {
 	
 
 	
-	/*
-	 * @InitBinder public void initBinder(WebDataBinder webDataBinder) {
-	 * SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	 * dateFormat.setLenient(false); webDataBinder.registerCustomEditor(Date.class,
-	 * new CustomDateEditor(dateFormat, true)); }
-	 */
+
 
